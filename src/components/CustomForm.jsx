@@ -50,7 +50,7 @@ export default function CustomForm() {
     console.log({ enroll });
     //Take the user to the card website if the registration finished successfully
 
-    addUser({
+    const add = await addUser({
       ...payload,
       pid: enroll.pid,
       cardLink: enroll.url,
