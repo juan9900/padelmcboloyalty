@@ -92,7 +92,6 @@ export default function PhoneInput() {
               className="py-2 flex flex-row items-center  w-full pl-2 "
               onClick={() => {
                 setFlag({ ...country });
-                console.log({ segunda: flag });
                 toggleFlagList();
               }}
             >

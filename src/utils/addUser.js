@@ -1,7 +1,6 @@
 import callWebhook from "./callWebhook";
 
 export default async function addUser(payload) {
-  console.log("checking user");
   try {
     const response = await callWebhook(
       process.env.NEXT_PUBLIC_URL_ADD,

@@ -38,16 +38,13 @@ export default function CustomForm() {
       return;
     }
 
-    //TODO: hay que agregar errores por si ocurren en el enroll y agregar la redireccion
     const enroll = await enrollUser(payload);
-    console.log(enroll);
     if (!enroll.ok) {
       setIsLoading(false);
       setEnrollError(enroll.errors);
       return;
     }
 
-    console.log({ enroll });
     //Take the user to the card website if the registration finished successfully
 
     const add = await addUser({

@@ -1,5 +1,4 @@
 export default async function callWebhook(url, payload = {}) {
-  console.log(`Calling webhook ${url}`);
   try {
     const response = await fetch(url, {
       method: "POST",
