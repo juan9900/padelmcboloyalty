@@ -5,24 +5,25 @@ import PhoneInput from "./PhoneInput";
 import { useFlagStore } from "@/app/stores/flagStore";
 // import enrollProcess from "../utils/enrollProcess";
 // import useUserSubscription from "@/hooks/useUserSuscription";
-import CustomSpinner from "./spinner";
+import CustomSpinner from "./CustomSpinner";
 import checkUser from "@/utils/checkUser";
 import enrollUser from "@/utils/enrollUser";
 import addUser from "@/utils/addUser";
+import ConfirmationModal from "./ConfirmationModal";
 export default function CustomForm() {
   const [termsAccepted, setTermsAccepted] = useState("true");
   const flag = useFlagStore((state) => state);
   const [isLoading, setIsLoading] = useState(false);
   const [enrollError, setEnrollError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
 
-  const onSubmit = async (data) => {
-    setIsLoading(true);
-    setEnrollError("");
+  const enrollProcess = async (data) => {
     data.phone = `${flag.code}${data.phone}`;
     const payload = {
       customerData: {
@@ -55,9 +56,28 @@ export default function CustomForm() {
     const cardURL = `https://q.passkit.net/~/#/p/${enroll.pid}`;
     window.location.replace(cardURL);
   };
+  const onSubmit = async (data) => {
+    setShowModal(true);
+    setEnrollError("");
+  };
 
   return (
     <div className=" w-4/5 md:w-2/5 mx-auto">
+      {/* <!-- Button trigger modal --> */}
+
+      {showModal ? (
+        <>
+          <ConfirmationModal
+            setIsLoading={setIsLoading}
+            setShowModal={setShowModal}
+            enrollProcess={enrollProcess}
+            name={watch("name")}
+            email={watch("email")}
+            phone={watch("phone")}
+          />
+        </>
+      ) : null}
+
       {enrollError && <p className="text-red-500">{enrollError}</p>}
       <form
         action=""
@@ -191,7 +211,7 @@ export default function CustomForm() {
           id="submit-btn"
           className="bg-secondary text-white my-4 btn btn-primary px-3 py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed flex flex-row items-center justify-center"
           type="submit"
-          disabled={!termsAccepted || isLoading}
+          disabled={!termsAccepted || isLoading || showModal}
         >
           {isLoading && <CustomSpinner />}
           Enviar

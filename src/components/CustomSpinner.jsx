@@ -3,7 +3,7 @@ export default function CustomSpinner() {
     <div role="status " className="flex justify-center items-center mr-1">
       <svg
         aria-hidden="true"
-        className="inline w-4 h-4   animate-spin text-white dark:fill-yellow-800 "
+        className={`inline w-4 h-4   animate-spin text-white fill-zinc-800 `}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
